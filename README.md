@@ -1,15 +1,29 @@
-### Java Spring template project
-
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
-
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/spring).
-
-### CI/CD with Auto DevOps
-
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
-
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
-
 # Rapid Eye Movement
-## Library Management System
-### James Kirwan, Saoirse Houlihan, Conor Dunne
+Rapid Eye Movement is a Library Information Management System. It allows users to create a library account in order to loan and reserve books and other artifacts in the system. It also allows librarians to manage users and artifacts.
+
+## Created By
+| James Kirwan | Saoirse Hoolihan | Conor Dunne
+|-|-|-|
+| 17402782 | 17340803 | 17379526 |
+
+## Run
+Create a new directory and open in terminal.
+Run:
+```
+    $ git clone git@gitlab.com:comp30860/projects/2020/rapid-eye-movement/libraryinformationmanagementsystem.git
+    $ mvn spring-boot:run
+```
+
+## Users
+### Librarians
+| Username | Password |
+|-|-|
+| maximus@email.com | password|
+
+### Users
+| Username | Password |
+|-|-|
+| reader@email.com | password |
+| page@email.com | cat |
+| joebloggs@example.com | blogs |
+| coverella@email.com | dog |
