@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <div th:replace="common/head.html"></div>
+    <body>
+        <div th:replace="common/nav.html"></div>
+
+        <div class="container">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Register</div>
+                <div class="card-body">
+                    <div class="container">
+                        <form method="POST" action="/register">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-" style="width: 45%;">
+                                        <div class="form-group">
+                                            <label for="memberName">Your name</label>
+                                            <input type="text" class="form-control" name="memberName" placeholder="Enter you name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="memberEmail">Email address</label>
+                                            <input type="email" class="form-control" name="memberEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.<br/></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="memberPassword">Password</label>
+                                            <input type="password" class="form-control" name="memberPassword" placeholder="Password">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-" style="margin-left: auto; margin-right: 0; width: 45%">
+                                        <div class="form-group">
+                                            <label for="memberAddress">Home address</label>
+                                            <input type="text" class="form-control" name="memberAddress" placeholder="Enter address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="memberPhone">Phone Number</label>
+                                            <input type="tel" class="form-control" name="memberPhone" placeholder="Enter phone number">
+                                            <small id="emailHelp" class="form-text text-muted"><br/></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="memberyBirthday">Birthday</label>
+                                            <input type="date" class="form-control" name="memberBirthday" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 50%;">Submit</button>
+                            <a class="btn btn-primary float-right" style="width:50%;" href="/">Back</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="common/footer.html"></div>
+    </body>
+</html>

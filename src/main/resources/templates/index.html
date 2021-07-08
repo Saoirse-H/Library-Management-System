@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <div th:replace="common/head.html"></div>
+  <body>
+    <div th:replace="common/nav.html"></div>
+    <div class="container" style="text-align: center;">
+      <span th:if="erro != null">
+        <div class="row">
+          <p style="color:red;font-weight:bold;text-align:center;" th:text="${error}"></p>
+        </div>
+      </span>
+
+      <div class="row">
+        <h2>Index</h2>
+        <br>
+      </div>
+
+      <div class="row">
+        <table class="table table-hover">
+          <tr class="table-active">
+            <th>Name</th>
+            <th>Type</th>
+            <th>Author</th>
+            <th>View</th>
+          </tr>
+          <tr th:each="book:${artifacts}">
+            <td th:text=${book.title}></td>
+            <td th:text=${book.media}></td>
+            <td th:text=${book.author}></td>
+            <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/view(id=${book.id})}" role="button">View</a> </td> 
+          </tr>
+        </table> 
+      </div>
+    </div>
+    <div th:replace="common/footer.html"></div>
+  </body>
+</html>

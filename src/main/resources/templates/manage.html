@@ -1,0 +1,130 @@
+<html>
+    <div th:replace="common/head.html"></div>
+    <body>
+        <div th:replace="common/nav.html"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 float-right">
+                <a class="btn btn-primary btn float-right" href="/admin" role ="button">Back</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">&nbsp</div>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-default">
+                        <th scope="col">Name</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Due</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Move</th>
+                        <th scope="col">Set user</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr class="table-default" th:each="stock : ${stocks}">
+                        <td th:text="${artifact.title}"></td>
+
+                        <td>
+                            <span th:if="${stock.location == 'Shelf'}" text=""></span>
+                            <span th:unless="${stock.location == 'Shelf'}" th:text="${stock.userName}"></span>
+                        </td>
+
+                        <td th:text="${#dates.format(stock.due, 'dd-MM-YYYY')}"></td>
+                        <td> <!--Thyme leaf if statement for stock location-->
+                            <span th:if="${stock.location == 'Shelf'}">Returned</span>
+                            <span th:unless="${stock.location == 'Shelf'}">On Loan</span>
+                        </td>
+                        
+                        <form method="POST" action="/create-loan">
+                            <td style="text-align: center;"> <!--If setting on loan / returned-->
+                                <span th:if="${stock.location == 'Shelf'}"><button type="submit" class="btn btn-outline-secondary btn-sm">Loan</button></span>
+                                <span th:unless="${stock.location == 'Shelf'}"><a class="btn btn-outline-secondary btn-sm" th:href="@{/toggle(id=${stock.id})}" role="button">Return</a></span>
+                            </td>
+                        
+                            <td>
+                                <span th:if="${stock.location == 'Shelf'}">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <select class="form-control" id="userId" name="userId">
+                                                <option value="0">Select Member</option>
+                                                <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.name}"></option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="stockId" th:value="${stock.id}">
+                                    </fieldset>
+                                </span>
+                                <span th:unless="${stock.location == 'Shelf'}">N/A</span>
+                            </td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal" id="users">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User List</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Reserve</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-default" th:each="member : ${members}">
+                                    <div th:if="${member.role == 'member'}">
+                                        <td th:text="${member.name}"></td>
+                                        <td><a class="btn btn-sm btn-primary float-right" th:href="@{/reserve/{memberId}/{bookId} (memberId=${member.id}, bookId=${artifact.id})}" role="button">Reserve</a></td>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="common/footer.html"></div>
+    </body>
+</html>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("users");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("userList");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    } 
+</script>

@@ -1,0 +1,91 @@
+<html>
+  <div th:replace="common/head.html"></div>
+  <body>
+    <div th:replace="common/nav.html"></div>
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#members">Members</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#stock">Stock</a>
+        </li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="members"> 
+          <div class="row">
+            <div class="col-lg-12">&nbsp</div>
+          </div>
+          <div>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search-member">
+              <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Search Members">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>       
+          <div class="row">
+            <div class="col-lg-12">&nbsp</div>
+          </div>
+          <table class="table table-hover">
+            <thead>
+            <tr class = "table-active">
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Fees</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr class="table-default" th:each="member : ${members}">
+                <div th:if="${member.role == 'member'}">
+                  <td th:text="${member.name}"></td>
+                  <td th:text="${member.email}"></td>
+                  <td th:text="'€' + ${#numbers.formatDecimal(member.lateFee, 1, 'COMMA', 2, 'POINT')}"></td>
+                  <td><a th:href="@{/member(id=${member.id})}" button class = "btn btn-primary btn-sm">View</a></td>
+                </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="stock">
+          <div class="row">
+            <div class="col-lg-12">&nbsp</div>
+          </div>
+          <div>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search-stock">
+              <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Search Stock">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>       
+          <div class="row">
+            <div class="col-lg-12">&nbsp</div>
+          </div>
+          <table class="table table-hover">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Type</th>
+                <th scope="col">Remove</th>
+                <th scope="col">Manage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-default" th:each="artifact:${artifacts}">
+                <td th:text="${artifact.title}"></td>
+                <td th:text="${artifact.author}"></td>
+                <td th:text="${artifact.media}"></td>
+                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/remove(id=${artifact.id})}" role="button">Remove</a></td>
+                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/manage(id=${artifact.id})}" role="button">Manage</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <a class="btn btn-primary float-right" href="/create" role="button">Create</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div th:replace="common/footer.html"></div>
+  </body>
+</html>

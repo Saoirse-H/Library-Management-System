@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <div th:replace="common/head.html"></div>
+    <body>
+        <div class="alert alert-dismissible alert-primary" th:if="${size > 0}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            Your reserved artifact <a href="#" class="alert-link"></a><span th:text="${collect}"></span></a> is ready for collection.
+        </div>
+        
+        <div th:replace="common/nav.html"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">&nbsp</div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    <div th:if="${user.role == 'admin'}">
+                        <a class="btn btn-primary float-right" href="/admin">Back</a>
+                    </div>
+                    <div th:if="${user.role == 'member'}">
+                        <a class="btn btn-primary float-right" href="/">Back</a>
+                    </div>
+                    <a class="btn btn-primary float-right" th:href="@{/update(id=${member.id})}">Update Information</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">&nbsp</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Name: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${member.name}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Date of Joining: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${#dates.format(member.joinDate, 'dd-MM-YYYY')}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Email Address: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${member.email}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Phone number: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${member.phone}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Fine/Fees: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="'€' + ${#numbers.formatDecimal(member.lateFee, 1, 'COMMA', 2, 'POINT')}"></p>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+
+            <span th:if="erro != null">
+                <div class="row">
+                    <p style="color:red;font-weight:bold;text-align:center;" th:text="${error}"></p>
+                </div>
+            </span>
+            
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#loan">On Loan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#reserved">Reserved</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#overdue">Overdue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#history">Loan History</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active show" id="loan">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr class="table-active">
+                            <th scope="col">#</th>
+                            <th scope="col">Artifact</th>
+                            <th scope="col">Checked Out</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Renew</th>
+                            <th scope="col">Return</th>
+                            <th scope="col">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="book, stat:${loan}">
+                                <td th:text=${stat.count}></td>
+                                <td th:text=${book.title}></td>
+                                <td th:text="${#dates.format(book.checked, 'dd-MM-YYYY')}"></td>
+                                <td th:text="${#dates.format(book.due, 'dd-MM-YYYY')}"></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/renew/{memberId}/{bookId} (memberId=${member.id}, bookId=${book.id})}">Renew</a></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/return/{memberId}/{bookId} (memberId=${member.id}, bookId=${book.id})}" roll="button">Return</a></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/view(id=${book.id})}" role="button">View</a></td>
+                              </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+                <div class="tab-pane fade" id="reserved">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr class="table-active"> 
+                            <th scope="col">#</th>
+                            <th scope="col">Artifact</th>
+                            <th scope="col">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="book, stat:${reserved}">
+                                <td th:text=${stat.count}></td>
+                                <td th:text=${book.title}></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/view(id=${book.id})}" role="button">View</a></td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="overdue">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr class="table-active">
+                            <th scope="col">#</th>
+                            <th scope="col">Artifact</th>
+                            <th scope="col">Checked Out</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Renew</th>
+                            <th scope="col">Return</th>
+                            <th scope="col">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="book, stat:${overdue}">
+                                <td th:text=${stat.count}></td>
+                                <td th:text=${book.title}></td>
+                                <td th:text="${#dates.format(book.checked, 'dd-MM-YYYY')}"></td>
+                                <td th:text="${#dates.format(book.due, 'dd-MM-YYYY')}"></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/renew/{memberId}/{bookId} (memberId=${member.id}, bookId=${book.id})}">Renew</a></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/return/{memberId}/{bookId} (memberId=${member.id}, bookId=${book.id})}" roll="button">Return</a></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/view(id=${book.id})}" role="button">View</a></td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="history">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr class="table-active">
+                            <th scope="col">#</th>
+                            <th scope="col">Artifact</th>
+                            <th scope="col">Returned?</th>
+                            <th scope="col">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="book, stat:${history}">
+                                <td th:text=${stat.count}></td>
+                                <td th:text=${book.title}></td>
+                                <td th:text=${book.returned}></td>
+                                <td><a class="btn btn-outline-secondary btn-sm" th:href="@{/view(id=${book.id})}" role="button">View</a></td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="common/footer.html"></div>
+    </body>
+</html>

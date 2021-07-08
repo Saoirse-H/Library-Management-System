@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <div th:replace="common/head.html"></div>
+    <body>
+        <div th:replace="common/nav.html"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">&nbsp</div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    <a class="btn btn-primary float-right" href="/">Back</a>
+                </div>
+            </div>
+            <span th:if="error != null">
+                <div class="row">
+                    <p style="color:red;font-weight:bold;text-align:center;" th:text="${error}"></p>
+                </div>
+            </span>
+            <div class="row">
+                <div class="col-lg-12">&nbsp</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Title: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${artifact.Title}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Author: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${artifact.Author}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Media Type: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${artifact.Media}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>In Stock: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${inStock}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Synopsis: </h6>
+                </div>
+                <div class="col-lg-10">
+                    <p th:text="${artifact.Synopsis}"></p>
+                </div>
+            </div>
+            <div class="row" th:if="${user != null}">
+                <div class="col-lg-11">
+                    <a class="btn btn-sm btn-primary float-right" th:href="@{/request(id=${artifact.id})}" role="button">Request</a>
+                </div>
+                <div class="col-lg-1">
+                    <a class="btn btn-sm btn-primary float-right" th:href="@{/reserve/{memberId}/{bookId} (memberId=${memberId}, bookId=${artifact.id})}" role="button">Reserve</a>
+                </div>
+            </div>
+        </div>
+        <div th:replace="common/footer.html"></div>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 35px;">
+    <a class="navbar-brand" href="/"><img id="logo" src="images/logo.png" style="height:100px;"></a>
+    <div>
+        <h1 style="color: aliceblue;">Rapid Eye Movement</h1>
+        <p style="color: aliceblue;">Library Information Management System</p>
+    </div>
+
+    <div style="margin-right: 0; margin-left: auto; ">
+        <form class="form-inline my-2 my-lg-0" method="POST" action="/search">
+            <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            <button id="openSearch" type="button" class="btn btn-secondary dropdown-toggle"></button>
+        </form>
+        <br/>
+        <div th:if="${user == null}">
+            <a href="/login" style="color: aliceblue;">Login</a> | <a href="/register" style="color: aliceblue;">Register</a> | <a href="/" style="color: aliceblue;">Home</a>
+        </div>
+        <div th:if="${user != null && user.role=='member'}">
+            <a href="/logout" style="color: aliceblue;">Log Out</a> | <a th:href="@{/member(id=${user.id})}" style="color: aliceblue;">My Account</a> | <a href="/" style="color: aliceblue;">Home</a>
+        </div>
+        <div th:if="${user != null && user.role=='admin'}">
+            <a href="/logout" style="color: aliceblue;">Log Out</a> | <a href="/admin" style="color: aliceblue;">Admin</a> | <a href="/" style="color: aliceblue;">Home</a>
+        </div>
+        </div>
+
+    <div class="modal" id="advSearch">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Advanced Search</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/search-adv">
+                        <div class="form-group">
+                            <label for="searchTitle">Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Enter title">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchAuthor">Author</label>
+                            <input type="text" name="author" class="form-control" placeholder="Enter author">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mediaTyle">Media Type</label>
+                            <select class="form-control" name="media" id="mediaTypeInput">
+                                <option>Book</option>
+                                <option>CD</option>
+                                <option>DVD</option>
+                                <option>Comic</option>
+                            </select>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="stock" type="checkbox" value="Shelf">
+                                In stock?
+                            </label>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

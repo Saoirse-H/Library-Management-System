@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <div th:replace="common/head.html"></div>
+    <body>
+        <div th:replace="common/nav.html"></div>
+        <div class="container" style="text-align: center;">
+           <div class="row">
+               <div class="col-lg-2 align-self-center"><h3>Add an item</h3></div>
+                <div class="col-lg-10 float-right">
+                    <a class="btn btn-primary btn float-right" href="/admin" role ="button">Back</a>
+                </div>
+           </div>
+           <form method="POST" action="/create">
+            <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-2 align-self-center">
+                    <label for="title">Title:</label>
+                </div>
+                <div class="col-lg-10">
+                    <input type = "text" name="title" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-lg-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                    <div class="col-lg-2 align-self-center">
+                        <label for="title">Author:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type = "text" name="author" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+
+            <div class="row">
+                <div class="col-lg-2 align-self-center">
+                    <label for="title">Media Type:</label>
+                </div>
+                    <div class="col-lg-10">
+                        <input type = "text" name="media" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2 align-self-center">
+                        <label for="title">Stock:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type = "text" name="stock" class="form-control">
+                </div>
+                </div>
+        
+                <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+                </div>
+
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <label for="synopsis">Synopsis:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <textarea name="synopsis" style="height: 200px;" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary float-right">Create</button>
+                    </div>
+                </div>
+           </form>
+           </div>
+
+        <div th:replace="common/footer.html"></div>
+    </body>
+</html>
